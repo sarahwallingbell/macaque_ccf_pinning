@@ -83,7 +83,7 @@ def get_soma_and_fiducial_pins():
 def main(out_dir):
     print('\nAccumulating soma pins and finding associated structures...')
 
-    df = get_soma_and_fiducial_pins(out_dir)
+    df = get_soma_and_fiducial_pins()
 
     print('Saving results...')
     x = datetime.datetime.now()
