@@ -8,7 +8,8 @@ import argschema as ags
 
 
 class IO_Schema(ags.ArgSchema):
-    out_dir = ags.fields.OutputDir(required=True, description="Path to output directory", default= r'\\allen\programs\celltypes\workgroups\mousecelltypes\macaque_structures')
+    in_dir = ags.fields.InputDir(required=True, metadata={'description':"Path to input directory with jsons to process"}, dump_default= r'\\allen\programs\celltypes\workgroups\mousecelltypes\Ingrid_Redford\NHP Pinning')
+    out_dir = ags.fields.OutputDir(required=True, metaata={'description':"Path to output directory"}, dump_default= r'\\allen\programs\celltypes\workgroups\mousecelltypes\macaque_structures')
 
 
 def process_json(jblob, annotation, structures ) :
@@ -49,10 +50,10 @@ def process_json(jblob, annotation, structures ) :
     return locs
 
 
-def get_soma_and_fiducial_pins():
+def get_soma_and_fiducial_pins(json_root):
 
     #macaque annotation volume
-    model_directory = r'\\allen\programs\celltypes\workgroups\humancelltypes\HMBA_annotations\macaque\annotations\Mac25Rhesus_v2'
+    model_directory = r'\\allen\programs\celltypes\workgroups\humancelltypes\HMBA_annotations\macaque\annotations\Mac25Rhesus_v2\D99'
     annotation_file = os.path.join(model_directory, 'Mac25Rhesus_v2.D99Atlas_v2_Subcortical_RegByRIKEN1_0.16mm.nii.gz')
     annotation = sitk.ReadImage( annotation_file )
 
@@ -64,7 +65,6 @@ def get_soma_and_fiducial_pins():
 
     #process all jsons (from all brains in the folder)
     cell_info = []
-    json_root = r'\\allen\programs\celltypes\workgroups\mousecelltypes\Ingrid_Redford\NHP Pinning'
     for json_brain_dir, _, filenames in os.walk(json_root):
         for filename in filenames:
             if filename.endswith(".json"):
@@ -80,10 +80,10 @@ def get_soma_and_fiducial_pins():
     return df
 
 
-def main(out_dir):
+def main(in_dir, out_dir):
     print('\nAccumulating soma pins and finding associated structures...')
 
-    df = get_soma_and_fiducial_pins()
+    df = get_soma_and_fiducial_pins(in_dir)
 
     print('Saving results...')
     x = datetime.datetime.now()
@@ -103,7 +103,7 @@ def main(out_dir):
 
 if __name__ == "__main__":
     parser = ags.ArgSchemaParser(schema_type=IO_Schema)
-    main(parser.args['out_dir'])
+    main(parser.args['in_dir'], parser.args['out_dir'])
 
 
 
