@@ -9,7 +9,7 @@ import argschema as ags
 
 class IO_Schema(ags.ArgSchema):
     in_dir = ags.fields.InputDir(required=True, metadata={'description':"Path to input directory with jsons to process"}, dump_default= r'\\allen\programs\celltypes\workgroups\mousecelltypes\Ingrid_Redford\NHP Pinning')
-    out_dir = ags.fields.OutputDir(required=True, metaata={'description':"Path to output directory"}, dump_default= r'\\allen\programs\celltypes\workgroups\mousecelltypes\macaque_structures')
+    out_dir = ags.fields.OutputDir(required=True, metadata={'description':"Path to output directory"}, dump_default= r'\\allen\programs\celltypes\workgroups\mousecelltypes\macaque_structures')
 
 
 def process_json(jblob, annotation, structures ) :
