@@ -96,14 +96,14 @@ def main(in_dir, out_dir):
         output_file = "macaque_soma_structures.csv"
         df.to_csv(os.path.join(out_dir, output_file), index=False)
     except:
-        print(f'Unable to save {os.path.join(out_dir, output_file)}, likely a user has it open.')
+        print('Unable to save {}, likely a user has it open.'.format(os.path.join(out_dir, output_file)))
 
     try: 
         output_file_archive = "macaque_soma_structures.csv".format(dt)
         os.makedirs(os.path.join(out_dir, 'archive'), exist_ok=True)
         df.to_csv(os.path.join(out_dir, 'archive', output_file_archive), index=False)
     except:
-        print(f'Unable to save {os.path.join(out_dir, 'archive', output_file_archive)}.')
+        print('Unable to save {}.'.format(os.path.join(out_dir, 'archive', output_file_archive)))
 
     print('Done!')
     print(f'Results: {os.path.join(out_dir, output_file)}')
