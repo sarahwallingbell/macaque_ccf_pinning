@@ -66,15 +66,16 @@ def get_soma_and_fiducial_pins(json_root):
     #process all jsons (from all brains in the folder)
     cell_info = []
     for json_brain_dir, _, filenames in os.walk(json_root):
-        for filename in filenames:
-            if filename.endswith(".json"):
-                json_path = os.path.join(json_brain_dir, filename)
+        if os.path.basename(json_brain_dir) == '.json': # Only process directories named '.json'
+            for filename in filenames:
+                if filename.endswith(".json"):
+                    json_path = os.path.join(json_brain_dir, filename)
 
-                with open(json_path, 'r') as j_file:
-                    jblob = json.load(j_file)
+                    with open(json_path, 'r') as j_file:
+                        jblob = json.load(j_file)
 
-                processed = process_json(jblob, annotation, structures)
-                cell_info.extend(processed)
+                    processed = process_json(jblob, annotation, structures)
+                    cell_info.extend(processed)
 
     df = pd.DataFrame(cell_info)
     return df
